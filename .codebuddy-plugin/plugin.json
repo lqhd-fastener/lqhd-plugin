@@ -11,8 +11,8 @@
   },
   "agents": [
     "./agents/lqhd-finder-team-lead.md",
-    "./agents/lqhd-flush-agent.md",
     "./agents/lqhd-mail-agent.md",
+    "./agents/lqhd-flush-agent.md",
     "./agents/lqhd-report-agent.md",
     "./agents/lqhd-teyi-company-list-agent.md",
     "./agents/lqhd-teyi-contact-list-agent.md"
@@ -30,8 +30,8 @@
   "teamInfo": {
     "leadAgent": "lqhd-finder-team-lead",
     "memberAgents": [
-      "lqhd-flush-agent",
       "lqhd-mail-agent",
+      "lqhd-flush-agent",
       "lqhd-report-agent",
       "lqhd-teyi-company-list-agent",
       "lqhd-teyi-contact-list-agent"
@@ -99,13 +99,6 @@
       "role": "lead"
     },
     {
-      "id": "lqhd-flush-agent",
-      "name": { "en": "Lead Sourcer", "zh": "线索挖掘官" },
-      "profession": { "en": "Lead Sourcing Specialist", "zh": "线索挖掘专员" },
-      "avatar": "avatars/lqhd-flush-agent.png",
-      "role": "member"
-    },
-    {
       "id": "lqhd-mail-agent",
       "name": { "en": "Outreach Writer", "zh": "邮件触达官" },
       "profession": { "en": "Email Outreach Specialist", "zh": "邮件触达专员" },
@@ -113,9 +106,16 @@
       "role": "member"
     },
     {
+      "id": "lqhd-flush-agent",
+      "name": { "en": "Regional Client Explorer", "zh": "地区客户发掘员" },
+      "profession": { "en": "Regional Client Explorer", "zh": "地区客户发掘员" },
+      "avatar": "avatars/lqhd-flush-agent.png",
+      "role": "member"
+    },
+    {
       "id": "lqhd-report-agent",
-      "name": { "en": "Insight Analyst", "zh": "情报分析官" },
-      "profession": { "en": "Client Intelligence Analyst", "zh": "客户情报分析师" },
+      "name": { "en": "Client Background Reporter", "zh": "客户背景报告员" },
+      "profession": { "en": "Client Background Reporter", "zh": "客户背景报告员" },
       "avatar": "avatars/lqhd-report-agent.png",
       "role": "member"
     },

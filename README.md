@@ -18,9 +18,9 @@ A **Team-type** expert package following the WorkBuddy expert package specificat
 | Role | Agent ID | Responsibilities |
 |------|----------|------|
 | Customer Development Director (Lead) | `lqhd-finder-team-lead` | Task orchestration, information relay, and result compilation |
-| Lead Mining Officer | `lqhd-flush-agent` | Search for and refresh overseas buyer leads by industry/region/size |
-| Email Outreach Officer | `lqhd-mail-agent` | Write personalized development letters, multilingual versions, and follow-up sequences |
-| Intelligence Analyst | `lqhd-report-agent` | Customer background checks, profile building, priority scoring, and intelligence reports |
+| Outreach Writer | `lqhd-mail-agent` | Write personalized development letters, multilingual versions, and follow-up sequences |
+| Regional Client Explorer | `lqhd-flush-agent` | Search for and refresh overseas buyer leads by industry/region/size |
+| Client Background Reporter | `lqhd-report-agent` | Customer background checks, profile building, priority scoring, and client background / regional sourcing reports |
 | TeYi Company List Execution Officer | `lqhd-teyi-company-list-agent` | Process TeYi xlsx **company lists** (multiple companies + corporate public emails): background-check each company, notify whether they qualify, send development letters to public emails, and insert company data into lqhd-mcp-server |
 | TeYi Contact List Execution Officer | `lqhd-teyi-contact-list-agent` | Process TeYi xlsx **contact lists** (one company + multiple contacts): pull company records and public email lists from lqhd-mcp-server, insert contacts, write letters tailored to each individual by job title, and send emails (when requested) |
 
