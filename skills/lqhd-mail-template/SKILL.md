@@ -3,91 +3,91 @@ name: lqhd-mail-template
 description: Generate a reusable foreign trade email template from the user's instructions and save it to <current working directory>/config/mail-template.md. Use when the user wants to create or update an email template, outreach template, follow-up template or a reusable email skeleton for customer development.
 ---
 
-# 邮件模板生成
+# Email Template Generation
 
-依据用户的提示词，生成一份**可复用的外贸邮件模板**，写入用户当前工作目录的 `config/mail-template.md`。与 `lqhd-mail-agent`（针对具体客户写个性化开发信）不同：本技能产出的是带占位符、可反复套用的通用模板。
+Based on the user's prompt, generate a **reusable foreign trade email template** and write it to `config/mail-template.md` in the user's current working directory. Unlike `lqhd-mail-agent` (which writes personalized outreach emails for specific customers), this skill produces a general-purpose template with placeholders that can be reused repeatedly.
 
-## 何时使用
+## When to Use
 
-- 用户要求"生成一个邮件模板 / 开发信模板 / 跟进邮件模板"
-- 用户希望沉淀一套可复用的邮件骨架，之后按客户替换占位符即可
-- 用户指定邮件的用途、语气、语言、行业等，要求产出模板而非某封具体邮件
+- The user requests to "generate an email template / outreach email template / follow-up email template"
+- The user wants to establish a reusable email skeleton, into which placeholders can later be replaced per customer
+- The user specifies the purpose, tone, language, industry, etc. of the email and requests a template rather than a specific email
 
-## 输入要素
+## Input Elements
 
-从用户提示词中提取，缺失项按合理默认处理并标注：
+Extract from the user's prompt; handle missing items with reasonable defaults and note them:
 
-| 要素 | 说明 | 默认值 |
+| Element | Description | Default |
 |------|------|--------|
-| 模板用途 | 首封开发信 / 跟进 / 报价 / 邀约 / 感谢等 | 首封开发信 |
-| 目标客户 | 行业、地区、角色（进口商/采购经理等） | 通用海外买家 |
-| 我方产品 | 主推产品与卖点（优先参考用户企业画像 `profile/profile.md`） | 待补充占位符 |
-| 语言 | 中文 / 英文 / 双语 | 英文 |
-| 语气 | 正式 / 友好 / 简洁 | 专业友好 |
-| 关键要素 | 必须包含的钩子、CTA、证书、案例等 | 按需 |
+| Template Purpose | First outreach email / follow-up / quotation / invitation / thank-you, etc. | First outreach email |
+| Target Customer | Industry, region, role (importer/procurement manager, etc.) | General overseas buyer |
+| Our Products | Flagship products and selling points (prefer referencing the user company profile `profile/profile.md`) | Placeholder to be supplemented |
+| Language | Chinese / English / bilingual | English |
+| Tone | Formal / friendly / concise | Professional and friendly |
+| Key Elements | Hooks, CTA, certificates, case studies, etc. that must be included | As needed |
 
-## 模板结构（四段式）
+## Template Structure (Four-Part Format)
 
-邮件正文模板遵循本专家团统一的四段式固定格式，占位符用 `{{变量名}}` 表示：
+The email body template follows the unified four-part fixed format of this expert team, with placeholders written as `{{variable_name}}`:
 
-1. **开头**：问候 + 一句话来信目的
-2. **第一段 — 对对方的了解**：`{{对方公司/主营/市场/近期动向}}`，体现"我了解你"
-3. **第二段 — 我方匹配的产品**：`{{我方产品/契合点/差异化优势}}`
-4. **结尾**：低门槛 CTA + 礼貌收尾
+1. **Opening**: Greeting + one-sentence statement of the purpose of the email
+2. **Paragraph 1 — understanding of the recipient**: `{{recipient company/core products/market/recent developments}}`, showing "I know you"
+3. **Paragraph 2 — our matching products**: `{{our products/fit/differentiating advantages}}`
+4. **Closing**: Low-friction CTA + polite sign-off
 
-## 工作流程
+## Workflow
 
-1. **解析需求**：从用户提示词提取上述输入要素
-2. **补充卖点**：若用户企业画像存在（`<用户当前工作目录>/profile/profile.md`），读取其中的产品与价值主张填充"我方产品"部分；无画像时用占位符
-3. **生成模板**：按四段式结构撰写正文，配主题行模板与占位符说明
-4. **落盘保存**：写入 `<用户当前工作目录>/config/mail-template.md`；若 `config/` 目录不存在，先创建目录再写文件
+1. **Parse requirements**: Extract the above input elements from the user's prompt
+2. **Supplement selling points**: If a user company profile exists (`<user's current working directory>/profile/profile.md`), read its products and value propositions to fill in the "our products" section; if no profile exists, use placeholders
+3. **Generate template**: Write the body according to the four-part structure, along with a subject-line template and placeholder descriptions
+4. **Save to disk**: Write to `<user's current working directory>/config/mail-template.md`; if the `config/` directory does not exist, create it before writing the file
 
-## 输出模板
+## Output Template
 
-写入 `config/mail-template.md` 的内容格式：
+Format of the content written to `config/mail-template.md`:
 
 ```markdown
-# 邮件模板：[用途] — [目标客户/行业]
+# Email Template: [Purpose] — [Target Customer/Industry]
 
-- 用途：
-- 目标客户：
-- 语言 / 语气：
-- 生成日期：
+- Purpose:
+- Target Customer:
+- Language / Tone:
+- Generation Date:
 
-## 主题行模板
-[如：{{我方公司}} — {{产品}} for {{对方市场}}]
+## Subject Line Template
+[e.g., {{our company}} — {{product}} for {{recipient market}}]
 
-## 正文模板（四段式）
+## Body Template (Four-Part Format)
 
-[开头：问候 + 来信目的]
+[Opening: greeting + purpose of the email]
 
-[第一段：对对方的了解 — {{对方公司/主营/市场/动向}}]
+[Paragraph 1: understanding of the recipient — {{recipient company/core products/market/developments}}]
 
-[第二段：我方匹配的产品 — {{我方产品/契合点/优势}}]
+[Paragraph 2: our matching products — {{our products/fit/advantages}}]
 
-[结尾：CTA + 礼貌收尾]
+[Closing: CTA + polite sign-off]
 
-## 占位符说明
-| 占位符 | 含义 | 示例/来源 |
+## Placeholder Descriptions
+| Placeholder | Meaning | Example/Source |
 |--------|------|-----------|
-| {{对方公司}} | 收件客户公司名 | 来自背调报告 |
-| {{我方产品}} | 主推产品 | 来自用户企业画像 |
+| {{recipient company}} | Name of the recipient customer's company | From the background investigation report |
+| {{our products}} | Flagship products | From the user company profile |
 | ... | ... | ... |
 
-## 使用提示
-- 替换占位符后核对事实，不编造客户信息
-- 避免垃圾邮件触发词，控制长度
-- 发送前仍需按 lqhd-mail-delivery 走配置读取与 SMTP 探测
+## Usage Tips
+- After replacing placeholders, verify the facts; do not fabricate customer information
+- Avoid spam trigger words and keep the length under control
+- Before sending, still follow lqhd-mail-delivery for configuration reading and SMTP probing
 ```
 
-## 输出文件
+## Output File
 
-- 路径：`<用户当前工作目录>/config/mail-template.md`（用户使用本插件时所在的工作区根目录，非插件安装目录）
-- 无 `config/` 目录时先创建再写入
-- 多次生成时覆盖更新，保持模板为最新；若用户希望保留多版本，按用途另存为 `config/mail-template-<用途>.md`
+- Path: `<user's current working directory>/config/mail-template.md` (the root of the workspace where the user is using this plugin, not the plugin installation directory)
+- If there is no `config/` directory, create it before writing
+- On repeated generation, overwrite and update to keep the template current; if the user wants to retain multiple versions, save separately by purpose as `config/mail-template-<purpose>.md`
 
-## 注意事项
+## Notes
 
-- 只依据用户提示提及的要素生成，缺失信息用占位符，不编造具体公司、产品或案例事实
-- 模板中的占位符要在"占位符说明"中逐一列出，方便后续替换
-- 生成的模板供后续 `lqhd-mail-agent` 套用或用户手动使用；实际发送仍走 `lqhd-mail-delivery` 的配置读取与探测流程
+- Generate only from elements mentioned in the user's prompt; use placeholders for missing information, and never fabricate specific companies, products, or case-study facts
+- List every placeholder in the template individually in the "Placeholder Descriptions" section for easy replacement later
+- The generated template is for later use by `lqhd-mail-agent` or manual use by the user; actual sending still follows the configuration reading and probing workflow of `lqhd-mail-delivery`

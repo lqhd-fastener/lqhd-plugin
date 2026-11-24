@@ -333,7 +333,7 @@ def cmd_send(args):
 
 BOUNCE_SUBJECT_KEYS = [
     "delivery status notification", "delivery failure", "undelivered mail",
-    "returned mail", "mail delivery", "failure notice", "退信", "投递失败",
+    "returned mail", "mail delivery", "failure notice", "bounce", "delivery failed",
 ]
 BOUNCE_SENDER_KEYS = ["mailer-daemon", "postmaster", "mail delivery subsystem"]
 
@@ -385,38 +385,48 @@ def extract_dsn(msg):
 def analyze_bounce(reason):
     """Map a bounce reason to (category, solution)."""
     text = (reason or "").lower()
+    # Match patterns include both English and Chinese keywords so that bounce
+    # messages in either language are recognized. Categories and solutions are
+    # always returned in English. Chinese strings here are detection data, not UI text.
     rules = [
-        (["5.1.1", "user unknown", "no such user", "550", "邮箱不存在", "unknown recipient"],
-         "收件人邮箱不存在",
-         "核对客户邮箱拼写；通过官网/领英等渠道重新确认联系人；换用其他联系人邮箱。"),
-        (["5.1.2", "5.2.1", "domain not found", "host not found", "域名不存在"],
-         "收件人域名不存在",
-         "检查域名拼写是否正确；确认客户公司是否更换域名；剔除该线索。"),
-        (["5.2.2", "552", "mailbox full", "quota exceeded", "收件箱满"],
-         "收件人邮箱已满",
-         "隔几天后重试一次；若仍退信，改用其他联系人或电话/社媒渠道。"),
-        (["5.7.1", "554", "rejected", "policy", "blocked", "被拒绝", "拒收"],
-         "被对方服务器策略拒绝",
-         "检查发件内容是否含垃圾邮件特征（过多链接/附件/营销词）；确认发件 IP 声誉；"
-         "配置 SPF/DKIM/DMARC；降低发送频率。"),
-        (["spam", "junk", "垃圾邮件", "content filter", "message rejected as spam"],
-         "被判定为垃圾邮件",
-         "简化正文、去掉可疑链接与附件、避免过度营销用语；使用 feedback 回复邮箱；"
-         "预热发件账号；分批低频发送。"),
-        (["relay", "relay access denied", "中继"],
-         "中继权限被拒",
-         "检查 config/mail.json 的账号与授权码是否正确、send-server 配置是否正确。"),
-        (["4.1", "4.2", "4.4", "4.7", "temporary", "try again later", "deferred", "临时"],
-         "临时性退信",
-         "多为对方服务器临时故障或限流；稍后（数小时）重试，暂不修改邮箱。"),
+        (["5.1.1", "user unknown", "no such user", "550", "mailbox does not exist", "unknown recipient",
+          "邮箱不存在", "查无此人", "用户不存在", "收件人不存在"],
+         "Recipient mailbox does not exist",
+         "Verify the spelling of the customer's email address; reconfirm the contact through the official website, LinkedIn or other channels; try another contact's email address."),
+        (["5.1.2", "5.2.1", "domain not found", "host not found", "domain does not exist",
+          "域名不存在", "域名无法解析"],
+         "Recipient domain does not exist",
+         "Check whether the domain name is spelled correctly; confirm whether the customer's company has changed its domain; drop this lead."),
+        (["5.2.2", "552", "mailbox full", "quota exceeded", "inbox full",
+          "邮箱已满", "空间不足"],
+         "Recipient mailbox is full",
+         "Retry after a few days; if the message still bounces, switch to another contact or use phone/social media channels."),
+        (["5.7.1", "554", "rejected", "policy", "blocked", "refused",
+          "拒收", "策略拒绝", "被拒绝"],
+         "Rejected by the recipient server's policy",
+         "Check whether the message content has spam traits (too many links/attachments/marketing words); verify the sending IP reputation; "
+         "configure SPF/DKIM/DMARC; reduce the sending frequency."),
+        (["spam", "junk", "spam email", "content filter", "message rejected as spam",
+          "垃圾邮件", "垃圾短信", "反垃圾"],
+         "Classified as spam",
+         "Simplify the message body, remove suspicious links and attachments, and avoid excessive marketing language; use the feedback reply address; "
+         "warm up the sending account; send in small batches at a low frequency."),
+        (["relay", "relay access denied", "relay failure",
+          "中继", "中继权限"],
+         "Relay permission denied",
+         "Check whether the account and auth-code in config/mail.json are correct, and whether the send-server configuration is correct."),
+        (["4.1", "4.2", "4.4", "4.7", "temporary", "try again later", "deferred", "temporary failure",
+          "稍后重试", "临时失败", "请稍后再试"],
+         "Temporary bounce",
+         "Usually caused by a temporary failure or rate limiting on the recipient's server; retry after a few hours and do not change the email address for now."),
         (["5.0", "5.3", "5.4", "5.5", "5.6"],
-         "永久性投递失败（其他）",
-         "结合诊断信息核实收件地址与内容；必要时更换联系人或渠道。"),
+         "Permanent delivery failure (other)",
+         "Verify the recipient address and message content based on the diagnostic information; switch contacts or channels if necessary."),
     ]
     for keys, category, solution in rules:
         if any(k in text for k in keys):
             return category, solution
-    return "未知退信原因", "人工查看退信原文诊断信息，核对收件地址与邮件内容后再决定重试或换渠道。"
+    return "Unknown bounce reason", "Manually review the diagnostic information in the original bounce message, verify the recipient address and message content, and then decide whether to retry or switch channels."
 
 
 def cmd_check_bounce(args):

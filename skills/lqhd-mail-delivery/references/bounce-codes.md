@@ -1,30 +1,30 @@
-# 退信原因分类与解决方案
+# Bounce Cause Categories and Solutions
 
-脚本 `check-bounce` 会依据退信诊断信息（SMTP 状态码 / DSN Status / 诊断文本）自动归类并给出解决方案。本表说明分类口径，供核对与人工处理。
+The `check-bounce` script automatically categorizes bounces and provides solutions based on bounce diagnostic information (SMTP status codes / DSN Status / diagnostic text). This table explains the classification criteria for verification and manual handling.
 
-| 分类 | 常见特征（状态码/关键词） | 含义 | 解决方案 |
+| Category | Common Indicators (Status Codes/Keywords) | Meaning | Solution |
 |------|--------------------------|------|---------|
-| 收件人邮箱不存在 | 5.1.1 / 550 / user unknown / no such user | 该邮箱地址不存在 | 核对拼写；通过官网/领英重新确认联系人；换其他联系人 |
-| 收件人域名不存在 | 5.1.2 / 5.2.1 / domain not found | 域名无效或已更换 | 检查域名拼写；确认公司是否换域名；剔除该线索 |
-| 收件人邮箱已满 | 5.2.2 / 552 / mailbox full / quota exceeded | 对方收件箱满 | 数日后重试一次；仍失败则换联系人或渠道 |
-| 被服务器策略拒绝 | 5.7.1 / 554 / rejected / policy / blocked | 对方服务器拒收 | 检查内容垃圾特征；确认发件 IP 声誉；配置 SPF/DKIM/DMARC；降频 |
-| 被判定垃圾邮件 | spam / junk / content filter / 垃圾邮件 | 内容或发送行为被判垃圾 | 简化正文、去链接附件、避免营销词；用 feedback 作 Reply-To；预热账号；分批低频 |
-| 中继权限被拒 | relay access denied | 发件服务器中继配置或认证错误 | 检查 config/mail.json 的账号、授权码、send-server 配置 |
-| 临时性退信 | 4.x.x / temporary / try again later / deferred | 对方服务器临时故障或限流 | 数小时后重试，暂不改邮箱 |
-| 永久性投递失败（其他） | 5.0 / 5.3 / 5.4 / 5.5 / 5.6 | 其他永久失败 | 结合诊断信息核实地址与内容；换联系人或渠道 |
-| 未知退信原因 | 未匹配上述规则 | 需人工判断 | 查看退信原文诊断信息，核对地址与内容后决定重试或换渠道 |
+| Recipient mailbox does not exist | 5.1.1 / 550 / user unknown / no such user | The email address does not exist | Verify spelling; reconfirm the contact via the official website/LinkedIn; switch to another contact |
+| Recipient domain does not exist | 5.1.2 / 5.2.1 / domain not found | The domain is invalid or has been changed | Check domain spelling; confirm whether the company has changed its domain; remove the lead |
+| Recipient mailbox is full | 5.2.2 / 552 / mailbox full / quota exceeded | The recipient's inbox is full | Retry once after a few days; if it still fails, switch contact or channel |
+| Rejected by server policy | 5.7.1 / 554 / rejected / policy / blocked | The recipient's server refused the message | Check the content for spammy characteristics; verify the sender IP reputation; configure SPF/DKIM/DMARC; reduce sending frequency |
+| Classified as spam | spam / junk / content filter / spam mail | The content or sending behavior was judged as spam | Simplify the body, remove links and attachments, avoid marketing keywords; use `feedback` as Reply-To; warm up the account; send in smaller batches at lower frequency |
+| Relay access denied | relay access denied | Sending server relay configuration or authentication error | Check the `account`, `auth-code`, and `send-server` settings in `config/mail.json` |
+| Temporary bounce | 4.x.x / temporary / try again later / deferred | Temporary failure or rate limiting on the recipient's server | Retry after a few hours; do not change the mailbox for now |
+| Permanent delivery failure (other) | 5.0 / 5.3 / 5.4 / 5.5 / 5.6 | Other permanent failures | Verify the address and content against the diagnostic information; switch contact or channel |
+| Unknown bounce cause | No match to the above rules | Requires manual judgment | Review the original bounce diagnostic information, then verify the address and content to decide whether to retry or switch channels |
 
-## 状态码速查
+## Status Code Quick Reference
 
-- **2.x.x**：成功
-- **4.x.x**：临时失败（可重试）
-- **5.x.x**：永久失败（通常需修正地址或内容）
-- **550**：最常用拒收码，具体原因看诊断文本
-- **DSN Status**：形如 `5.1.1`，首位 4/5 表示临时/永久
+- **2.x.x**: Success
+- **4.x.x**: Temporary failure (retryable)
+- **5.x.x**: Permanent failure (usually requires correcting the address or content)
+- **550**: The most common rejection code; check the diagnostic text for the specific cause
+- **DSN Status**: In the form `5.1.1`, where the first digit 4/5 indicates a temporary/permanent failure
 
-## 处理原则
+## Handling Principles
 
-1. 高价值客户遇临时退信（4.x.x）→ 间隔重试，不频繁
-2. 永久退信（5.x.x）→ 优先核实地址，不盲目重发
-3. 疑似垃圾邮件判定 → 先优化内容与发送策略，再重发
-4. 每次处理都记录：退信客户、原因分类、采取的解决方案、结果
+1. High-value customer with a temporary bounce (4.x.x) → retry at intervals, not too frequently
+2. Permanent bounce (5.x.x) → verify the address first, do not blindly resend
+3. Suspected spam classification → first optimize the content and sending strategy, then resend
+4. Record every handling: the bounced customer, cause category, solution applied, and result

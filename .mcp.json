@@ -2,11 +2,11 @@
   "mcpServers": {
     "lqhd-mcp-server": {
       "type": "http",
-      "url": "http://localhost:3000",
+      "url": "http://localhost/mcp",
       "x-workbuddy": {
         "displayName": {
-          "zh": "LQHD 工作台注入服务",
-          "en": "LQHD Workbench Injector"
+          "zh": "LQ 工作台服务",
+          "en": "LQ Workbench services"
         },
         "description": {
           "zh": "把客户线索、匹配度评分与客户开发信等结果注入 LQHD 工作台服务器",

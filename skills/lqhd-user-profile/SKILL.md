@@ -3,105 +3,105 @@ name: lqhd-user-profile
 description: Build a structured profile of the USER'S OWN company (the seller/supplier) from the user's prompt, company introduction, product catalog and official website. Capture company identity, products, strengths, target markets and value propositions for downstream customer development. Use when the user wants to generate or complete their own company profile.
 ---
 
-# 用户企业画像构建
+# User Company Profile Building
 
-根据用户提供的提示词、企业简介、产品目录、官网等材料，为**用户自己的企业（我方 / 供应商）**生成一份结构化企业画像。这份画像用于后续客户开发：让线索挖掘、开发信撰写、客户背调等环节清楚"我们是谁、卖什么、优势在哪、要找谁"。
+Based on materials provided by the user — such as prompts, company introduction, product catalog, and official website — generate a structured company profile for **the user's own company (our side / the supplier)**. This profile is used for subsequent customer development: it lets lead discovery, outreach email writing, customer background investigation, and other stages clearly understand "who we are, what we sell, where our strengths lie, and whom we are looking for."
 
-> 注意：本技能生成的是**用户自己的企业画像**，不是海外买家/客户的画像。买家画像由 `lqhd-background-investigation` 与团队分析完成。
+> Note: This skill generates a profile of **the user's own company**, not a profile of an overseas buyer/customer. Buyer profiles are handled by `lqhd-background-investigation` and team analysis.
 
-## 何时使用
+## When to Use
 
-- 用户要求生成或补全"我们公司 / 我方 / 自己的"企业画像
-- 用户提供企业简介、产品目录、官网链接等，希望沉淀成结构化档案
-- 团队在正式开发客户前，需要先明确自身定位与卖点
+- The user requests to generate or complete a company profile for "our company / our side / our own company"
+- The user provides a company introduction, product catalog, official website link, etc., and wants them consolidated into a structured profile
+- The team needs to clarify its own positioning and selling points before formally developing customers
 
-## 输入材料
+## Input Materials
 
-按可用性收集，用户提供了什么就用什么，缺失项标注"待补充"：
+Collect based on availability; use whatever the user provides, and mark missing items as "to be supplemented":
 
-| 来源 | 可提取信息 |
+| Source | Information That Can Be Extracted |
 |------|-----------|
-| 用户提示词 | 企业定位、目标市场、主营业务、特别强调的卖点 |
-| 企业简介 | 公司名、成立时间、性质（工厂/贸易商）、规模、资质认证 |
-| 产品目录 | 产品品类、主打产品、规格、价格带、OEM/ODM 能力 |
-| 官网 | 产品线、品牌、市场覆盖、联系方式、案例、新闻动态 |
+| User prompt | Company positioning, target markets, main business, specially emphasized selling points |
+| Company introduction | Company name, founding date, nature (factory/trader), scale, certifications and qualifications |
+| Product catalog | Product categories, flagship products, specifications, price range, OEM/ODM capabilities |
+| Official website | Product lines, brands, market coverage, contact information, case studies, news and updates |
 
-## 画像维度
+## Profile Dimensions
 
-| 维度 | 内容 |
+| Dimension | Content |
 |------|------|
-| 企业身份 | 公司名称、成立时间、所在地、企业性质（工厂/贸易商/品牌方）、规模 |
-| 主营业务 | 主营品类、核心产品、产品目录要点 |
-| 核心优势 | 产能、研发、认证资质、价格/质量优势、定制与交付能力 |
-| 目标市场 | 现有市场、意向拓展市场、重点国家/地区 |
-| 目标客户 | 希望开发的客户类型（进口商/批发商/品牌方/零售商等） |
-| 品牌与渠道 | 品牌名、官网、B2B 平台店铺、社媒 |
-| 价值主张 | 一句话核心卖点、差异化优势、可用于开发信的关键词 |
-| 待补充项 | 材料未提供、需用户进一步确认的信息 |
+| Company Identity | Company name, founding date, location, company nature (factory/trader/brand owner), scale |
+| Main Business | Main categories, core products, key points of the product catalog |
+| Core Strengths | Production capacity, R&D, certifications, price/quality advantages, customization and delivery capabilities |
+| Target Markets | Existing markets, markets targeted for expansion, key countries/regions |
+| Target Customers | Types of customers the user hopes to develop (importers/wholesalers/brand owners/retailers, etc.) |
+| Brand and Channels | Brand name, official website, B2B platform stores, social media |
+| Value Proposition | One-sentence core selling point, differentiating advantages, keywords usable in outreach emails |
+| Items to Supplement | Information not provided in the materials and requiring further confirmation from the user |
 
-## 工作流程
+## Workflow
 
-1. **收集材料**：读取用户提示词、企业简介、产品目录、官网内容等材料
-2. **提取信息**：按画像维度逐项提取，注明信息来源
-3. **补齐维度**：缺失维度标注"待补充"，不编造公司事实
-4. **提炼卖点**：归纳核心价值主张与差异化优势，形成可用于开发信的关键词
-5. **结构化输出**：按下方模板生成画像
-6. **落盘保存**：将生成的画像写入**用户当前工作目录**（用户使用本插件时所在的工作区根目录，非插件安装目录）下的 `profile/profile.md`；若 `profile/` 目录不存在，先创建该目录再写入文件
+1. **Collect materials**: Read the user prompt, company introduction, product catalog, official website content, and other materials
+2. **Extract information**: Extract item by item according to the profile dimensions, noting the source of each piece of information
+3. **Complete the dimensions**: Mark missing dimensions as "to be supplemented"; do not fabricate company facts
+4. **Distill selling points**: Summarize core value propositions and differentiating advantages into keywords usable in outreach emails
+5. **Structured output**: Generate the profile according to the template below
+6. **Save to disk**: Write the generated profile to `profile/profile.md` under the **user's current working directory** (the root of the workspace where the user is using this plugin, not the plugin installation directory); if the `profile/` directory does not exist, create it before writing the file
 
-## 输出模板
+## Output Template
 
 ```markdown
-# 用户企业画像：[公司名称]
+# User Company Profile: [Company Name]
 
-## 一、企业身份
-- 公司名称：
-- 成立时间：
-- 所在地：
-- 企业性质：工厂 / 贸易商 / 品牌方
-- 规模：
-- 信息来源：提示词 / 企业简介 / 官网 / 产品目录
+## I. Company Identity
+- Company Name:
+- Founding Date:
+- Location:
+- Company Nature: Factory / Trader / Brand Owner
+- Scale:
+- Information Source: Prompt / Company Introduction / Official Website / Product Catalog
 
-## 二、主营业务与产品
-- 主营品类：
-- 核心产品：
-- 产品目录要点：
-- OEM/ODM 能力：
+## II. Main Business and Products
+- Main Categories:
+- Core Products:
+- Key Product Catalog Points:
+- OEM/ODM Capabilities:
 
-## 三、核心优势
-- 产能 / 研发：
-- 认证资质：
-- 价格 / 质量优势：
-- 定制与交付能力：
+## III. Core Strengths
+- Production Capacity / R&D:
+- Certifications and Qualifications:
+- Price / Quality Advantages:
+- Customization and Delivery Capabilities:
 
-## 四、目标市场与客户
-- 现有市场：
-- 意向拓展市场：
-- 目标客户类型：
+## IV. Target Markets and Customers
+- Existing Markets:
+- Markets Targeted for Expansion:
+- Target Customer Types:
 
-## 五、品牌与渠道
-- 品牌名：
-- 官网：
-- B2B 平台 / 社媒：
+## V. Brand and Channels
+- Brand Name:
+- Official Website:
+- B2B Platforms / Social Media:
 
-## 六、价值主张
-- 一句话核心卖点：
-- 差异化优势：
-- 开发信可用关键词：
+## VI. Value Proposition
+- One-sentence Core Selling Point:
+- Differentiating Advantages:
+- Keywords for Outreach Emails:
 
-## 七、待补充项
-[材料未提供、需用户确认的信息]
+## VII. Items to Supplement
+[Information not provided in the materials and requiring confirmation from the user]
 ```
 
-## 输出文件
+## Output File
 
-- 画像生成后必须写入**用户当前工作目录**（即用户使用本插件时所在的工作区根目录，通常是其项目根目录；**不是**本插件的安装目录）下的 `profile/profile.md`
-- 写入路径 = `<用户当前工作目录>/profile/profile.md`，路径中的 `profile/` 为相对当前工作目录
-- 若当前工作目录下无 `profile/`，先用 mkdir 创建该目录，再写入 `profile.md`
-- 多次生成时覆盖更新该文件，保持内容为最新画像
+- After generation, the profile must be written to `profile/profile.md` under the **user's current working directory** (i.e., the root of the workspace where the user is using this plugin, usually their project root directory; **not** the installation directory of this plugin)
+- Write path = `<user's current working directory>/profile/profile.md`, where `profile/` in the path is relative to the current working directory
+- If there is no `profile/` in the current working directory, first create the directory with mkdir, then write `profile.md`
+- On repeated generation, overwrite and update the file to keep the content as the latest profile
 
-## 注意事项
+## Notes
 
-- 只依据用户提供的材料提取信息，严禁编造公司、产品或资质事实
-- 无法从材料确认的信息标注"待补充"，需要推断时标注"推断"并说明依据
-- 区分"事实"（来自材料）与"提炼"（基于材料的归纳）
-- 官网等外部材料涉及实时信息时注明获取日期
+- Extract information only from materials provided by the user; never fabricate companies, products, or qualification facts
+- Mark information that cannot be confirmed from the materials as "to be supplemented"; when an inference is needed, mark it as "inference" and explain the basis
+- Distinguish "facts" (from materials) from "distillation" (summaries based on materials)
+- Note the retrieval date when external materials such as the official website involve real-time information

@@ -3,54 +3,54 @@ name: lqhd-customer-searching
 description: Search and discover potential overseas trade customers by industry, target market, company size and purchasing behavior. Build structured, deduplicated and tiered buyer lead lists. Use when the user asks to find, source or expand overseas customer or buyer leads.
 ---
 
-# 海外客户线索检索
+# Overseas Customer Lead Search
 
-按行业、目标市场与客户特征系统性地挖掘海外潜在买家，输出结构化、去重、分级的客户线索清单。
+Systematically discover potential overseas buyers by industry, target market, and customer characteristics, producing a structured, deduplicated, and tiered list of customer leads.
 
-## 何时使用
+## When to Use
 
-- 用户要求找客户、挖线索、按市场/行业筛选买家
-- 需要扩大客户池或刷新已有客户名单
-- 主理人下达线索挖掘阶段任务
+- The user requests to find customers, source leads, or filter buyers by market/industry
+- There is a need to expand the customer pool or refresh an existing customer list
+- The lead agent assigns a lead-discovery stage task
 
-## 检索条件
+## Search Criteria
 
-开始前确认以下信息，缺失时给出合理默认并注明：
+Confirm the following information before starting; if any is missing, provide a reasonable default and note it:
 
-| 条件 | 说明 | 示例 |
+| Criterion | Description | Example |
 |------|------|------|
-| 目标市场 | 国家/地区 | 德国、北美、东南亚 |
-| 行业品类 | 产品或服务类目 | 汽配、家居、医疗器械 |
-| 客户类型 | 进口商/批发商/零售商/品牌方 | 进口商 |
-| 规模区间 | 营收或员工量级 | 中型 |
-| 数量 | 期望线索条数 | 20 条 |
+| Target Market | Country/region | Germany, North America, Southeast Asia |
+| Industry Category | Product or service category | Auto parts, home furnishings, medical devices |
+| Customer Type | Importer/wholesaler/retailer/brand owner | Importer |
+| Size Range | Revenue or employee magnitude | Medium-sized |
+| Quantity | Desired number of leads | 20 leads |
 
-## 检索渠道
+## Search Channels
 
-- 公开企业信息与行业目录
-- 海关/贸易数据（如可得）
-- 公司官网与官方社媒
-- B2B 平台与行业展会名录
+- Public corporate information and industry directories
+- Customs/trade data (if available)
+- Company official websites and official social media
+- B2B platforms and industry exhibition directories
 
-## 工作流程
+## Workflow
 
-1. **拆解条件**：把用户需求拆成可检索的关键词与筛选条件
-2. **多渠道检索**：分渠道收集候选客户，记录来源
-3. **交叉核对**：核对公司名称、国家、主营、官网等关键字段
-4. **去重分级**：按公司主体去重，按 A/B/C 标注线索质量
-5. **结构化输出**：按下方模板输出
+1. **Break down criteria**: Decompose the user's requirements into searchable keywords and filter conditions
+2. **Multi-channel search**: Collect candidate customers by channel, recording sources
+3. **Cross-check**: Verify key fields such as company name, country, core products, and official website
+4. **Deduplicate and tier**: Deduplicate by company entity, and label lead quality as A/B/C
+5. **Structured output**: Output according to the template below
 
-## 输出模板
+## Output Template
 
-| # | 公司名称 | 国家/地区 | 主营产品 | 公司规模 | 官网 | 联系人线索 | 分级 | 来源 | 可信度 |
+| # | Company Name | Country/Region | Core Products | Company Size | Website | Contact Leads | Tier | Source | Credibility |
 |---|---------|----------|---------|---------|------|-----------|------|------|-------|
-| 1 | ... | ... | ... | ... | ... | ... | A/B/C | ... | 高/中/待核实 |
+| 1 | ... | ... | ... | ... | ... | ... | A/B/C | ... | High/Medium/To be verified |
 
-附：检索条件说明、数量与分级分布、数据局限性提示。
+Attached: notes on search criteria, quantity and tier distribution, and data limitation caveats.
 
-## 注意事项
+## Notes
 
-- 严禁编造联系人姓名、邮箱、电话；无可靠来源时标注"待补充"
-- 遵守目标地区数据合规要求，仅使用公开可得信息
-- 每条线索注明来源与检索日期
-- 区分"事实"与"推断"
+- Never fabricate contact names, emails, or phone numbers; mark as "to be supplemented" when no reliable source exists
+- Comply with data compliance requirements in the target region, and use only publicly available information
+- Indicate the source and retrieval date for each lead
+- Distinguish "facts" from "inferences"

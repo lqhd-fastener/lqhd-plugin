@@ -3,72 +3,72 @@ name: lqhd-background-investigation
 description: Conduct background investigation on potential overseas trade customers. Verify company legitimacy, business status, product fit and market reputation from public sources, and flag risks. Use when the user asks to check, verify or investigate a foreign buyer or customer before outreach.
 ---
 
-# 客户背景调查
+# Customer Background Investigation
 
-对外贸潜在海外客户做背景调查，核实其真实性、经营状况与合作风险，为后续客户画像与开发信提供可信依据。
+Conduct background investigations on potential overseas trade customers, verifying their authenticity, business status, and cooperation risks, so as to provide credible evidence for subsequent customer profiling and outreach emails.
 
-## 何时使用
+## When to Use
 
-- 用户要求背调、核实或调查某个海外客户/买家
-- 主理人或成员在流程中需要对线索做可信度验证
-- 在触达前评估客户是否值得投入资源
+- The user requests a background check, verification, or investigation of a specific overseas customer/buyer
+- The lead agent or a team member needs to validate the credibility of a lead during the workflow
+- Assessing whether a customer is worth investing resources in before outreach
 
-## 调查维度
+## Investigation Dimensions
 
-| 维度 | 核查内容 | 主要来源 |
+| Dimension | Items to Verify | Primary Sources |
 |------|---------|---------|
-| 公司主体 | 注册名称、成立时间、所在地、法律实体 | 企业登记信息、官网 |
-| 经营状况 | 主营产品、规模、营收/员工量级、经营活跃度 | 官网、行业目录、B2B 平台 |
-| 贸易记录 | 进出口记录、采购品类与频次 | 海关/贸易数据（如可得） |
-| 市场信誉 | 评价、纠纷、负面新闻、认证资质 | 公开新闻、行业评价平台 |
-| 风险信号 | 信息不一致、异常投诉、失信记录 | 交叉来源比对 |
+| Company Entity | Registered name, founding date, location, legal entity | Corporate registry information, official website |
+| Business Status | Core products, scale, revenue/employee magnitude, business activity | Official website, industry directories, B2B platforms |
+| Trade Records | Import/export records, procurement categories and frequency | Customs/trade data (if available) |
+| Market Reputation | Reviews, disputes, negative news, certifications and qualifications | Public news, industry review platforms |
+| Risk Signals | Inconsistent information, abnormal complaints, records of dishonesty | Cross-source comparison |
 
-## 工作流程
+## Workflow
 
-1. **明确对象**：确认待调查公司名称、国家/地区与已知线索
-2. **多维检索**：按上表维度逐项检索公开信息，记录来源
-3. **交叉验证**：关键字段至少两个来源相互印证
-4. **风险标注**：对不一致、缺失或负面信息明确标注
-5. **结构化输出**：按模板输出，区分事实与推断
-6. **落盘保存**：将报告写入**用户当前工作目录**（用户使用本插件时所在的工作区根目录，非插件安装目录）下的 `customers/<客户标识>-company-report.md`
+1. **Identify the target**: Confirm the company name, country/region, and known leads of the entity to be investigated
+2. **Multi-dimensional search**: Search public information item by item across the dimensions in the table above, recording sources
+3. **Cross-verification**: Corroborate key fields with at least two sources
+4. **Flag risks**: Clearly mark inconsistent, missing, or negative information
+5. **Structured output**: Output according to the template, distinguishing facts from inferences
+6. **Save to disk**: Write the report to `customers/<customer-identifier>-company-report.md` under the **user's current working directory** (the root of the workspace where the user is using this plugin, not the plugin installation directory)
 
-## 输出文件（单独客户背调报告）
+## Output File (Individual Customer Background Report)
 
-- 路径：`<用户当前工作目录>/customers/<客户标识>-company-report.md`
-- 客户标识由客户公司名规范化而来：转小写、空格与特殊字符替换为连字符（如 "US Company" → `us-company`），得到 `us-company-report.md`
-- 若 `customers/` 目录不存在，先创建目录再写入文件
-- 每份报告对应一个客户，文件名以客户标识区分；同一客户多次背调时覆盖更新，保持最新
-- 这是**单独客户**的背调报告；按国家汇总的客户开发情报报告另由 report-agent 归档到 `reports/<国家简称>/`，二者不同
+- Path: `<user's current working directory>/customers/<customer-identifier>-company-report.md`
+- The customer identifier is derived from normalizing the customer's company name: lowercase, spaces and special characters replaced with hyphens (e.g., "US Company" → `us-company`), yielding `us-company-report.md`
+- If the `customers/` directory does not exist, create it before writing the file
+- Each report corresponds to one customer, with filenames distinguished by customer identifier; when the same customer is investigated multiple times, overwrite and update to keep the latest version
+- This is a background report for an **individual customer**; the country-aggregated customer development intelligence report is separately archived by the report-agent to `reports/<country-short-name>/` — the two are different
 
-## 输出模板
+## Output Template
 
 ```markdown
-# 客户背景调查：[公司名]
+# Customer Background Investigation: [Company Name]
 
-## 基本信息
-| 字段 | 内容 | 来源 | 可信度 |
+## Basic Information
+| Field | Content | Source | Credibility |
 |------|------|------|-------|
-| 公司名称 | ... | ... | 高/中/待核实 |
-| 成立时间 | ... | ... | ... |
-| 国家/地区 | ... | ... | ... |
-| 主营产品 | ... | ... | ... |
-| 规模 | ... | ... | ... |
+| Company Name | ... | ... | High/Medium/To be verified |
+| Founding Date | ... | ... | ... |
+| Country/Region | ... | ... | ... |
+| Core Products | ... | ... | ... |
+| Scale | ... | ... | ... |
 
-## 经营与贸易状况
-[要点]
+## Business and Trade Status
+[Key points]
 
-## 市场信誉与风险
-- 正面信号：...
-- 风险信号：...
+## Market Reputation and Risks
+- Positive signals: ...
+- Risk signals: ...
 
-## 结论
-- 可信度判断：高 / 中 / 低
-- 建议：可推进 / 谨慎推进 / 暂缓
+## Conclusion
+- Credibility assessment: High / Medium / Low
+- Recommendation: Proceed / Proceed with caution / Defer
 ```
 
-## 注意事项
+## Notes
 
-- 仅使用公开可得信息，遵守目标地区数据合规与隐私要求
-- 严格区分"事实"与"推断"，推断必须标注
-- 无法核实的字段标注"待核实"，严禁编造公司、联系人或贸易数据
-- 每条信息尽量注明来源与检索日期
+- Use only publicly available information, and comply with data compliance and privacy requirements in the target region
+- Strictly distinguish "facts" from "inferences"; inferences must be labeled as such
+- Mark fields that cannot be verified as "to be verified"; never fabricate companies, contacts, or trade data
+- Indicate the source and retrieval date for each piece of information wherever possible
