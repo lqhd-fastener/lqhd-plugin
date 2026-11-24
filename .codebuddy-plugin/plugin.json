@@ -53,8 +53,8 @@
   "avatar": "avatars/team.png",
   "categoryId": "07-SalesCommerce",
   "defaultInitPrompt": {
-    "zh": "帮我开发一批欧美市场的潜在客户，并给出背景调查和客户画像。",
-    "en": "Help me source potential buyers in Europe and the US, with background checks and customer profiles."
+    "zh": "帮我背调一下特易公司列表，并给相关客户发送邮件",
+    "en": "Run background checks on the Teyi company list and send outreach emails to the relevant customers."
   },
   "plugin": "lqhd-customers-finder",
   "keywords": [
@@ -74,16 +74,20 @@
   ],
   "quickPrompts": [
     {
-      "zh": "帮我开发一批欧美市场的潜在客户，并给出背景调查和客户画像。",
-      "en": "Help me source potential buyers in Europe and the US, with background checks and customer profiles."
+      "zh": "帮我背调一下特易公司列表，并给相关客户发送邮件",
+      "en": "Run background checks on the Teyi company list and send outreach emails to the relevant customers."
     },
     {
-      "zh": "根据客户背景，写一封高回复率的外贸开发信。",
-      "en": "Write a high-reply-rate foreign trade outreach email based on the customer's background."
+      "zh": "帮我处理一下该公司的联系人列表，并给联系人发送有效邮件",
+      "en": "Process this company's contact list and send effective outreach emails to the contacts."
     },
     {
-      "zh": "这份特易表是一家公司加多个联系人，从工作台拉取公司资料后，按联系人职位写千人千面开发信。",
-      "en": "This Teyi sheet is one company with many contacts: pull the company record from the workbench, then write role-tailored outreach emails."
+      "zh": "帮我做一下美国地区客户搜集报告",
+      "en": "Generate a customer sourcing report for the US region."
+    },
+    {
+      "zh": "帮我查询一下lqhd公司的信息",
+      "en": "Look up information about the company LQHD."
     }
   ],
   "members": [
