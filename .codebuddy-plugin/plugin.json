@@ -125,8 +125,8 @@
     },
     {
       "id": "lqhd-teyi-company-list-agent",
-      "name": { "en": "Teyi Company List Executive", "zh": "特易公司列表执行官" },
-      "profession": { "en": "Teyi Company List Executive", "zh": "特易公司列表执行官" },
+      "name": { "en": "Teyi Company List Executive", "zh": "特易公司人列表执行官" },
+      "profession": { "en": "Teyi Company List Executive", "zh": "特易公司人列表执行官" },
       "avatar": "avatars/lqhd-teyi-company-list-agent.png",
       "role": "member"
     },

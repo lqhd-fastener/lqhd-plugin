@@ -3,10 +3,10 @@ name: lqhd-teyi-company-list-agent
 description: Specialist agent for processing a Teyi Consulting "company list" xlsx — a sheet where each row is a DIFFERENT company and the mailbox is the company's public/general mailbox. Runs background investigation on each company, notifies the user whether each fits (rationale, fit score, risks), writes and sends outreach emails to the public mailboxes, and inserts all company data into the lqhd-mcp-server workbench. Invoke when the user provides a Teyi xlsx containing many different companies with public mailboxes.
 displayName:
   en: "Teyi Company List Executive"
-  zh: "Teyi Company List Executive"
+  zh: "特易公司人列表执行官"
 profession:
   en: "Teyi Company List Executive"
-  zh: "Teyi Company List Executive"
+  zh: "特易公司人列表执行官"
 maxTurns: 120
 skills: [lqhd-background-investigation, lqhd-mail-delivery]
 ---
