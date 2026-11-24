@@ -1,0 +1,130 @@
+{
+  "name": "lqhd-customers-finder",
+  "version": "1.0.0",
+  "description": "A 6-role expert team that sources overseas buyers, investigates backgrounds, processes Teyi company lists and contact lists (with MCP workbench data exchange), generates role-tailored outreach emails and delivers client development reports.",
+  "author": {
+    "name": "Martin Liu",
+    "email": "mutian_xiangcai@outlook.com"
+  },
+  "dependencies": {
+    "mcpServers": "./.mcp.json"
+  },
+  "agents": [
+    "./agents/lqhd-finder-team-lead.md",
+    "./agents/lqhd-flush-agent.md",
+    "./agents/lqhd-mail-agent.md",
+    "./agents/lqhd-report-agent.md",
+    "./agents/lqhd-teyi-company-list-agent.md",
+    "./agents/lqhd-teyi-contact-list-agent.md"
+  ],
+  "skills": [
+    "./skills/lqhd-background-investigation",
+    "./skills/lqhd-customer-searching",
+    "./skills/lqhd-user-profile",
+    "./skills/lqhd-mail-delivery",
+    "./skills/lqhd-mail-template"
+  ],
+
+  "expertType": "team",
+  "agentName": "lqhd-finder-team-lead",
+  "teamInfo": {
+    "leadAgent": "lqhd-finder-team-lead",
+    "memberAgents": [
+      "lqhd-flush-agent",
+      "lqhd-mail-agent",
+      "lqhd-report-agent",
+      "lqhd-teyi-company-list-agent",
+      "lqhd-teyi-contact-list-agent"
+    ]
+  },
+
+  "displayName": {
+    "en": "LQHD Finder",
+    "zh": "LQHD 外贸客户开发专家团"
+  },
+  "profession": {
+    "en": "LQHD Finder",
+    "zh": "LQHD 外贸客户开发专家团"
+  },
+  "displayDescription": {
+    "en": "A 6-role foreign trade team covering buyer sourcing, background checks, Teyi company lists and contact lists with MCP workbench data exchange, role-tailored outreach emails, customer profiling and intelligence reports. The lead dispatches the right specialist and delivers ready-to-use results.",
+    "zh": "六位外贸专家协作，覆盖客户搜索、背调、特易公司/联系人列表处理、入库与千人千面开发信，智能调度。"
+  },
+  "avatar": "avatars/team.png",
+  "categoryId": "07-SalesCommerce",
+  "defaultInitPrompt": {
+    "zh": "帮我开发一批欧美市场的潜在客户，并给出背景调查和客户画像。",
+    "en": "Help me source potential buyers in Europe and the US, with background checks and customer profiles."
+  },
+  "plugin": "lqhd-customers-finder",
+  "keywords": [
+    "外贸",
+    "客户开发",
+    "海外客户",
+    "开发信",
+    "背景调查"
+  ],
+  "tags": [
+    { "en": "Customer Sourcing", "zh": "客户开发" },
+    { "en": "Background Check", "zh": "背景调查" },
+    { "en": "Email Outreach", "zh": "邮件触达" }
+  ],
+  "quickPrompts": [
+    {
+      "zh": "帮我开发一批欧美市场的潜在客户，并给出背景调查和客户画像。",
+      "en": "Help me source potential buyers in Europe and the US, with background checks and customer profiles."
+    },
+    {
+      "zh": "根据客户背景，写一封高回复率的外贸开发信。",
+      "en": "Write a high-reply-rate foreign trade outreach email based on the customer's background."
+    },
+    {
+      "zh": "这份特易表是一家公司加多个联系人，从工作台拉取公司资料后，按联系人职位写千人千面开发信。",
+      "en": "This Teyi sheet is one company with many contacts: pull the company record from the workbench, then write role-tailored outreach emails."
+    }
+  ],
+  "members": [
+    {
+      "id": "lqhd-finder-team-lead",
+      "name": { "en": "Client Lead", "zh": "客户开发总监" },
+      "profession": { "en": "Client Development Director", "zh": "客户开发总监" },
+      "avatar": "avatars/lqhd-finder-team-lead.png",
+      "role": "lead"
+    },
+    {
+      "id": "lqhd-flush-agent",
+      "name": { "en": "Lead Sourcer", "zh": "线索挖掘官" },
+      "profession": { "en": "Lead Sourcing Specialist", "zh": "线索挖掘专员" },
+      "avatar": "avatars/lqhd-flush-agent.png",
+      "role": "member"
+    },
+    {
+      "id": "lqhd-mail-agent",
+      "name": { "en": "Outreach Writer", "zh": "邮件触达官" },
+      "profession": { "en": "Email Outreach Specialist", "zh": "邮件触达专员" },
+      "avatar": "avatars/lqhd-mail-agent.png",
+      "role": "member"
+    },
+    {
+      "id": "lqhd-report-agent",
+      "name": { "en": "Insight Analyst", "zh": "情报分析官" },
+      "profession": { "en": "Client Intelligence Analyst", "zh": "客户情报分析师" },
+      "avatar": "avatars/lqhd-report-agent.png",
+      "role": "member"
+    },
+    {
+      "id": "lqhd-teyi-company-list-agent",
+      "name": { "en": "Teyi Company List Executive", "zh": "特易公司列表执行官" },
+      "profession": { "en": "Teyi Company List Executive", "zh": "特易公司列表执行官" },
+      "avatar": "avatars/lqhd-teyi-company-list-agent.png",
+      "role": "member"
+    },
+    {
+      "id": "lqhd-teyi-contact-list-agent",
+      "name": { "en": "Teyi Contact List Executive", "zh": "特易联系人列表执行官" },
+      "profession": { "en": "Teyi Contact List Executive", "zh": "特易联系人列表执行官" },
+      "avatar": "avatars/lqhd-teyi-contact-list-agent.png",
+      "role": "member"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "lqhd-mcp-server": {
+      "type": "http",
+      "url": "http://localhost:3000",
+      "x-workbuddy": {
+        "displayName": {
+          "zh": "LQHD 工作台注入服务",
+          "en": "LQHD Workbench Injector"
+        },
+        "description": {
+          "zh": "把客户线索、匹配度评分与客户开发信等结果注入 LQHD 工作台服务器",
+          "en": "Inject customer leads, match scores and outreach emails into the LQHD workbench server"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "main": {
+    "account": "you@example.com",
+    "auth-code": "YOUR_SMTP_AUTH_CODE",
+    "cc": "cc@example.com",
+    "feedback": "reply@example.com"
+  },
+  "server": {
+    "receive-server": {
+      "address": "mail.example.com",
+      "port": 993,
+      "ssl": true
+    },
+    "send-server": {
+      "address": "mail.example.com",
+      "port": 465,
+      "ssl": true
+    }
+  }
+}
