@@ -53,8 +53,8 @@
   "avatar": "avatars/team.png",
   "categoryId": "07-SalesCommerce",
   "defaultInitPrompt": {
-    "zh": "帮我背调一下特易公司列表，并给相关客户发送邮件",
-    "en": "Run background checks on the Teyi company list and send outreach emails to the relevant customers."
+    "zh": "生成我自己的用户画像",
+    "en": "Generate my own user company profile."
   },
   "plugin": "lqhd-customers-finder",
   "keywords": [
@@ -74,6 +74,14 @@
   ],
   "quickPrompts": [
     {
+      "zh": "生成我自己的用户画像",
+      "en": "Generate my own user company profile."
+    },
+    {
+      "zh": "生成宁波lq公司的用户画像",
+      "en": "Generate the user company profile of Ningbo LQ Company."
+    },
+    {
       "zh": "帮我背调一下特易公司列表，并给相关客户发送邮件",
       "en": "Run background checks on the Teyi company list and send outreach emails to the relevant customers."
     },
@@ -84,10 +92,6 @@
     {
       "zh": "帮我做一下美国地区客户搜集报告",
       "en": "Generate a customer sourcing report for the US region."
-    },
-    {
-      "zh": "帮我查询一下lqhd公司的信息",
-      "en": "Look up information about the company LQHD."
     }
   ],
   "members": [
