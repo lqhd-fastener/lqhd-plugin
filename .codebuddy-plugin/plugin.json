@@ -67,7 +67,10 @@
   "tags": [
     { "en": "Customer Sourcing", "zh": "客户开发" },
     { "en": "Background Check", "zh": "背景调查" },
-    { "en": "Email Outreach", "zh": "邮件触达" }
+    { "en": "Email Outreach", "zh": "邮件触达" },
+    { "en": "Email Template", "zh": "邮件模版" },
+    { "en": "Customer Report", "zh": "客户报告" },
+    { "en": "Region Report", "zh": "地区报告" }
   ],
   "quickPrompts": [
     {
