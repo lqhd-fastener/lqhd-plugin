@@ -161,6 +161,9 @@ lqhd-plugin/
 
 ## Usage
 
+> **面向业务同事的完整中文使用手册（零代码、纯对话例句）见 [使用手册.md](./使用手册.md)。**
+> 建议第一次使用前先读一遍，尤其是「第一次用之前的 5 分钟准备」一节。
+
 After selecting this expert team in the WorkBuddy Expert Center, you can directly describe your foreign trade customer development needs, for example:
 
 - Based on the company introduction and product catalog I provide, generate our company's profile.
