@@ -1,6 +1,6 @@
 # LQHD Finder — Foreign Trade Customer Development Expert Team
 
-A **Team-type** expert package following the WorkBuddy expert package specification (v2.0), designed for foreign trade customer development scenarios. Six roles collaborate to complete the overseas customer development loop: lead mining → background investigation and customer profiling → personalized development letter outreach → customer development intelligence reports. It also supports processing two types of xlsx files exported by TeYi Consulting — **company lists** (multiple companies + corporate public email addresses: background checks, notifications, sending development letters to public emails, and **inserting into the workbench**) and **contact lists** (one company + multiple contacts: **pulling company data from the workbench**, inserting contacts, and generating letters tailored to each individual by job title). The two execution agents are chained into a pipeline via `lqhd-mcp-server`.
+A **Team-type** expert package following the WorkBuddy expert package specification (v2.0), designed for foreign trade customer development scenarios. Eight roles collaborate to complete the overseas customer development loop: lead mining → background investigation and customer profiling → personalized development letter outreach → workbench ingestion with data-quality audits → follow-up cadence waves with bounce governance → customer development intelligence reports. It also supports processing two types of xlsx files exported by TeYi Consulting — **company lists** (multiple companies + corporate public email addresses: background checks, notifications, sending development letters to public emails, and **inserting into the workbench**) and **contact lists** (one company + multiple contacts: **pulling company data from the workbench**, inserting contacts, and generating letters tailored to each individual by job title). The execution agents are chained into a pipeline via `lqhd-mcp-server`.
 
 ## Basic Information
 
@@ -23,6 +23,8 @@ A **Team-type** expert package following the WorkBuddy expert package specificat
 | Client Background Reporter | `lqhd-report-agent` | Customer background checks, profile building, priority scoring, and client background / regional sourcing reports |
 | TeYi Company List Execution Officer | `lqhd-teyi-company-list-agent` | Process TeYi xlsx **company lists** (multiple companies + corporate public emails): background-check each company, notify whether they qualify, send development letters to public emails, and insert company data into lqhd-mcp-server |
 | TeYi Contact List Execution Officer | `lqhd-teyi-contact-list-agent` | Process TeYi xlsx **contact lists** (one company + multiple contacts): pull company records and public email lists from lqhd-mcp-server, insert contacts, write letters tailored to each individual by job title, and send emails (when requested) |
+| Workbench Data Officer | `lqhd-workbench-agent` | Ingest country client reports and campaign results into the workbench with idempotency, enrich state/coordinates, set up new countries end-to-end (config/boundaries/region names/ports), register reports and run read-only data audits |
+| Follow-up Cadence Manager | `lqhd-followup-agent` | Query per-customer email history, decide who is due for the next touch (D0 → D+2 → 4.x), draft stage-appropriate follow-ups, send after probing, register sends, govern bounces/verification and advance devStatus on replies |
 
 ## Built-in Skills
 
@@ -31,6 +33,8 @@ A **Team-type** expert package following the WorkBuddy expert package specificat
 - `lqhd-user-profile`: **User Company Profile** — Generate a profile of "the user's own company (our side)" based on user prompts, company introduction, product catalog, and official website, and write it to `profile/profile.md` in the **user's current working directory** as shared baseline information for the entire workflow
 - `lqhd-mail-delivery`: **Email Sending and Bounce Handling** — Read configuration from `config/mail.json` in the working directory (if missing, automatically create the directory and write a sample configuration; sending is blocked until real information is filled in), probe SMTP before sending, send, and then check for bounces after sending and analyze the causes to provide solutions
 - `lqhd-mail-template`: **Email Template Generation** — Generate reusable email templates based on user prompts, write them to `config/mail-template.md` in the user's current working directory (create the `config/` directory first if it does not exist)
+- `lqhd-workbench-sync`: **Workbench Data Sync & Quality** — Idempotent ingestion of reports/results into the workbench (CSV-ready tables, dedup by normalized company key, score<45 → excluded+competitor), state/coordinate enrichment, new-country setup (config/boundaries/region names/ports via MCP app-data), report registration and read-only data audits
+- `lqhd-outreach-hygiene`: **Outreach Data Hygiene** — Recipient filtering rules (never mail system mailboxes / internal employees / guessed addresses), pre-send SMTP RCPT probing without sending, post-send bounce scanning (`multipart/report` must be parsed by walking `text/plain` parts) and status sync (EmailRecord BOUNCED + contact verification), IMAP sent-mail verification by recipient+subject
 
 ## Core Workflow (Workflow A: Develop Customers by Country)
 
@@ -103,11 +107,13 @@ Collaboration follows the normative iron rule: the lead agent creates the team �
 
 ## MCP Service
 
-The MCP service `lqhd-mcp-server` is declared in the plugin root `.mcp.json` and referenced by `dependencies.mcpServers` in `plugin.json`. It serves three purposes:
+The MCP service `lqhd-mcp-server` is declared in the plugin root `.mcp.json` and referenced by `dependencies.mcpServers` in `plugin.json`. It serves five purposes:
 
 1. **Main workflow Step 5**: the lead agent injects leads/scores/development letters/profiles into the workbench
 2. **TeYi Company List Execution Officer**: **inserts** background-checked company data into the workbench
 3. **TeYi Contact List Execution Officer**: **pulls** company records and public email lists by company, and **inserts** contacts into the workbench (chained with the Company List Execution Officer)
+4. **Workbench Data Officer**: **idempotent batch ingestion** of country reports, state/coordinate enrichment, new-country setup (config/boundaries/region names/ports via app-data), report registration and read-only audits
+5. **Follow-up Cadence Manager**: **pulls** per-customer email history for cadence decisions, **registers** sends and bounce statuses, and advances devStatus
 
 - `lqhd-mcp-server` is a **placeholder service** to be auto-imported locally later; the current `.mcp.json` uses the placeholder address `http://localhost:3000`
 - Tool names to call are determined by the schema actually exposed at runtime (identifying write/query tools by purpose), not hardcoded
@@ -137,8 +143,8 @@ lqhd-plugin/
 │   └── plugin.json          # Expert package metadata and display information
 ├── .mcp.json                # MCP dependency declaration (lqhd-mcp-server, placeholder address)
 ├── settings.json            # Lead agent binding (agent = lqhd-finder-team-lead)
-├── agents/                  # Agent definitions for the lead + 5 members
-├── skills/                  # 5 built-in skills (including mail-delivery, mail-template, and scripts/)
+├── agents/                  # Agent definitions for the lead + 7 members
+├── skills/                  # 7 built-in skills (including mail-delivery, mail-template, workbench-sync, outreach-hygiene and scripts/)
 │   └── lqhd-mail-delivery/
 │       └── references/
 │           └── mail.json    # Email configuration format template (placeholder values, for reference when configuring the working directory)
@@ -163,3 +169,5 @@ After selecting this expert team in the WorkBuddy Expert Center, you can directl
 - Write a four-paragraph development letter for the key customers found above.
 - This TeYi sheet contains multiple companies + corporate public emails: background-check each one, notify whether they qualify, send development letters, and insert them into the workbench.
 - This TeYi sheet contains one company + multiple contacts: after pulling company data from the workbench, write a letter tailored to each individual contact by job title, and insert the contacts into the database.
+- Ingest this country report into the workbench, then audit the data quality.
+- Run the next follow-up wave for our US customers, handle bounces and advance statuses.

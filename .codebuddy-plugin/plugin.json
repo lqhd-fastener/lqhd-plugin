@@ -1,7 +1,7 @@
 {
   "name": "lqhd-customers-finder",
   "version": "1.0.0",
-  "description": "A 6-role expert team that sources overseas buyers, investigates backgrounds, processes Teyi company lists and contact lists (with MCP workbench data exchange), generates role-tailored outreach emails and delivers client development reports.",
+  "description": "An 8-role expert team that sources overseas buyers, investigates backgrounds, processes Teyi company lists and contact lists (with MCP workbench data exchange), ingests results into the workbench with data-quality audits, generates role-tailored outreach emails, runs follow-up cadence waves with bounce governance, and delivers client development reports.",
   "author": {
     "name": "Martin Liu",
     "email": "mutian_xiangcai@outlook.com"
@@ -15,14 +15,18 @@
     "./agents/lqhd-flush-agent.md",
     "./agents/lqhd-report-agent.md",
     "./agents/lqhd-teyi-company-list-agent.md",
-    "./agents/lqhd-teyi-contact-list-agent.md"
+    "./agents/lqhd-teyi-contact-list-agent.md",
+    "./agents/lqhd-workbench-agent.md",
+    "./agents/lqhd-followup-agent.md"
   ],
   "skills": [
     "./skills/lqhd-background-investigation",
     "./skills/lqhd-customer-searching",
     "./skills/lqhd-user-profile",
     "./skills/lqhd-mail-delivery",
-    "./skills/lqhd-mail-template"
+    "./skills/lqhd-mail-template",
+    "./skills/lqhd-workbench-sync",
+    "./skills/lqhd-outreach-hygiene"
   ],
 
   "expertType": "team",
@@ -34,7 +38,9 @@
       "lqhd-flush-agent",
       "lqhd-report-agent",
       "lqhd-teyi-company-list-agent",
-      "lqhd-teyi-contact-list-agent"
+      "lqhd-teyi-contact-list-agent",
+      "lqhd-workbench-agent",
+      "lqhd-followup-agent"
     ]
   },
 
@@ -47,8 +53,8 @@
     "zh": "LQHD 外贸提速工程团"
   },
   "displayDescription": {
-    "en": "A 6-role foreign trade team covering user company profiling, client sourcing and matching, background checks, Teyi company and contact list processing with MCP workbench exchange, email generation and outreach, and client / regional sourcing reports. The lead dispatches the right specialist and delivers ready-to-use results.",
-    "zh": "六位专家协作，覆盖用户画像生成、客户搜索匹配、背调、特易列表、邮件生成、客户与地区报告，智能调度。"
+    "en": "An 8-role foreign trade team covering user company profiling, client sourcing and matching, background checks, Teyi list processing, workbench ingestion with data audits, email outreach, follow-up cadence waves and client / regional reports. The lead dispatches the right specialist and delivers ready-to-use results.",
+    "zh": "八位专家协作，覆盖画像、找客、背调、特易列表、工作台入库、邮件触达、跟进节奏与地区报告。"
   },
   "avatar": "avatars/team.png",
   "categoryId": "07-SalesCommerce",
@@ -92,6 +98,14 @@
     {
       "zh": "帮我做一下美国地区客户搜集报告",
       "en": "Generate a customer sourcing report for the US region."
+    },
+    {
+      "zh": "把这份报告入库到工作台，并检查数据质量",
+      "en": "Ingest this report into the workbench and check data quality."
+    },
+    {
+      "zh": "帮我跟进一波客户，处理退信并推进状态",
+      "en": "Run the next follow-up wave, handle bounces and advance statuses."
     }
   ],
   "members": [
@@ -135,6 +149,20 @@
       "name": { "en": "Teyi Contact List Executive", "zh": "特易联系人列表执行官" },
       "profession": { "en": "Teyi Contact List Executive", "zh": "特易联系人列表执行官" },
       "avatar": "avatars/lqhd-teyi-contact-list-agent.png",
+      "role": "member"
+    },
+    {
+      "id": "lqhd-workbench-agent",
+      "name": { "en": "Workbench Data Officer", "zh": "工作台数据官" },
+      "profession": { "en": "Workbench Data Officer", "zh": "工作台数据官" },
+      "avatar": "avatars/lqhd-workbench-agent.png",
+      "role": "member"
+    },
+    {
+      "id": "lqhd-followup-agent",
+      "name": { "en": "Follow-up Cadence Manager", "zh": "跟进节奏官" },
+      "profession": { "en": "Follow-up Cadence Manager", "zh": "跟进节奏官" },
+      "avatar": "avatars/lqhd-followup-agent.png",
       "role": "member"
     }
   ]
