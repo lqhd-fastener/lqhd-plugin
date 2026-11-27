@@ -166,7 +166,9 @@ Lead compiles → outputs to the user
 ```
 [Step 1] Clarify the segment (the Lead): country / tier / campaign
 [Step 2] → lqhd-followup-agent (Follow-up Cadence Manager)
-  Pull per-customer email history from lqhd-mcp-server (EmailRecord is the single source of truth)
+  Pull per-customer email history from lqhd-mcp-server (EmailRecord is the single source of truth;
+  conversation/reply reads go through get-mail-conversations — served from the workbench MySQL cache,
+  instant; refresh=true forces a mail-server pull when up-to-the-minute data is needed)
   → decide the due-list by stage rules (D0 → D+2 → 4.1/4.2/4.3; skip bounced/invalid/competitor/system mailboxes)
   → draft stage-appropriate four-part follow-ups (reference the previous touch; one new hook per stage)
   → (when sending) probe → send via lqhd-mail-delivery → register sends (NEW→CONTACTED automatic)

@@ -47,6 +47,8 @@ Sending servers may rewrite the `Message-ID`. To verify what actually left:
 1. After sending, read the Sent folder via IMAP and match by **recipient + subject** (not by the client-side Message-ID).
 2. Write the server's actual `Message-ID` back into the corresponding `EmailRecord` via the mark-email tool — this is the reliable key for later threading and bounce correlation.
 
+> Boundary: bounce scanning and Sent-folder verification always read IMAP **directly** — they need server-side truth, not the workbench's cached conversation view. The cached get-mail-conversations tool (10-minute cooldown, `refresh: true` to force a pull) is for conversation reads and reply detection only.
+
 ## 5. Status & Stage Conventions
 
 - `EmailRecord` is the single source of truth for "did we ever mail this customer": unique per customer + stage + recipient.

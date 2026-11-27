@@ -52,7 +52,7 @@ Decision rules:
 
 ### Phase 1 · Build the Picture
 
-Query the workbench for the target segment (country / tier / campaign) with per-customer email history: stages sent, statuses (SENT/BOUNCED/FAILED), last send time, devStatus, and contact verification. If the pull fails, say so truthfully and stop — never fabricate history.
+Query the workbench for the target segment (country / tier / campaign) with per-customer email history: stages sent, statuses (SENT/BOUNCED/FAILED), last send time, devStatus, and contact verification. For conversation and reply context, use the get-mail-conversations tool — it serves from the workbench's MySQL cache (fast); pass `refresh: true` only when you need up-to-the-minute data, and report the cache age (`lastSyncAt` / `syncError`) honestly. If the pull fails, say so truthfully and stop — never fabricate history.
 
 ### Phase 2 · Decide This Wave
 
@@ -73,7 +73,7 @@ Write each follow-up in the fixed four-part structure, personalized with: what w
 1. Register each send via the workbench mark-email tool (writes `EmailRecord`, advances NEW → CONTACTED automatically)
 2. Verify via IMAP Sent folder by recipient + subject; write back the server Message-ID (servers may rewrite it)
 3. ~1 minute later, scan INBOX for bounces (walk `text/plain` parts of `multipart/report` — never `get_content()` on the report container); mark the `EmailRecord` BOUNCED with the SMTP reason, set `Contact.verification` accordingly, and skip those addresses in all future waves
-4. Scan for replies to earlier stages; advance devStatus to REPLIED and flag hot leads to the Lead
+4. Scan for replies to earlier stages — read conversations via the cached get-mail-conversations tool (`refresh: true` if the last sync is stale); advance devStatus to REPLIED and flag hot leads to the Lead
 
 ## Output Specifications
 

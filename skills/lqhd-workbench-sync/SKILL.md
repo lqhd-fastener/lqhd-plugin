@@ -11,11 +11,11 @@ Responsible for the **data side** of the LQHD client development loop: ingesting
 
 ## 1. Know the Workbench Toolset
 
-`lqhd-mcp-server` exposes ~18 tools. Identify exact names from the runtime schema; by purpose they are:
+`lqhd-mcp-server` exposes ~21 tools. Identify exact names from the runtime schema; by purpose they are:
 
 | Purpose | Tools (runtime names may differ slightly) |
 |---------|-------------------------------------------|
-| Read / audit | get-customer-by-id, query-customers, list-customers, query-contacts, query-emails, audit-database |
+| Read / audit | get-customer-by-id, query-customers, list-customers, query-contacts, query-emails, audit-database, database-status, get-mail-conversations |
 | Create / update one | create-customer, update-customer, create-contact, batch-create-contacts, batch-update-contacts |
 | Batch ingestion (main workhorse) | batch-upsert-customers, batch-update-customers |
 | Country & static data | upsert-country, upsert-app-data |
@@ -77,6 +77,16 @@ Run the audit tool (e.g. `audit-database`) after ingestion and report findings h
 
 - Register sends with the mark-email tool: it records `EmailRecord` (unique per customer + stage + recipient), writes back the server `messageId`, can flip status to BOUNCED (with the SMTP reason in `note`), and automatically advances a customer's `devStatus` from NEW to CONTACTED.
 - Never fabricate a send. If a send is requested, hand over to `lqhd-mail-delivery` (probe → send → bounce check), then register here.
+
+## 7. Reading Outreach Conversations (Cached)
+
+Use the get-mail-conversations tool to read inbound/outbound conversations. It serves from a **MySQL cache table**, not live IMAP:
+
+- Within 10 minutes of the last sync it answers from cache — fast; the response carries `syncedNow` / `lastSyncAt` / `syncError` so you can tell how fresh the data is.
+- Pass `refresh: true` to ignore the 10-minute cooldown and pull from the mail server immediately (first-ever sync takes ~40s; afterwards milliseconds).
+- `send-email` writes the sent message into the cache right away, so outgoing mail is visible without waiting for the next sync.
+- Sync failures keep the old cache readable and only set `syncError` — report cache age honestly instead of claiming live data.
+- Bounce scanning and Sent-folder verification still read IMAP **directly** (hygiene requires server-side truth); the cache is for conversation reads and reply detection.
 
 ## Output Contract
 
