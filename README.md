@@ -30,9 +30,9 @@ A **Team-type** expert package following the WorkBuddy expert package specificat
 
 - `lqhd-customer-searching`: Overseas customer lead search
 - `lqhd-background-investigation`: Overseas buyer background investigation
-- `lqhd-user-profile`: **User Company Profile** — Generate a profile of "the user's own company (our side)" based on user prompts, company introduction, product catalog, and official website, and write it to `profile/profile.md` in the **user's current working directory** as shared baseline information for the entire workflow
+- `lqhd-user-profile`: **User Company Profile** — Generate a profile of "the user's own company (our side)" based on user prompts, company introduction, product catalog, and official website; written to `profile/profile.md` in the **user's current working directory** and synced to the workbench backend (AppData `user-profile`) — downstream reads are backend-first (`get-app-data`), local file as fallback
 - `lqhd-mail-delivery`: **Email Sending and Bounce Handling** — Read configuration from `config/mail.json` in the working directory (if missing, automatically create the directory and write a sample configuration; sending is blocked until real information is filled in), probe SMTP before sending, send, and then check for bounces after sending and analyze the causes to provide solutions
-- `lqhd-mail-template`: **Email Template Generation** — Generate reusable email templates based on user prompts, write them to `config/mail-template.md` in the user's current working directory (create the `config/` directory first if it does not exist)
+- `lqhd-mail-template`: **Email Template Generation** — Generate reusable email templates based on user prompts and save them to the workbench backend (AppData `email-templates`, via upsert-app-data MCP tool); templates are fetched from the backend via get-app-data. Variables `%公司%` / `%联系人%` / `%国家%` only (`{{ }}` forbidden)
 - `lqhd-workbench-sync`: **Workbench Data Sync & Quality** — Idempotent ingestion of reports/results into the workbench (CSV-ready tables, dedup by normalized company key, score<45 → excluded+competitor), state/coordinate enrichment, new-country setup (config/boundaries/region names/ports via MCP app-data), report registration, read-only data audits, and cached outreach-conversation reads (get-mail-conversations serves from a MySQL cache with a 10-minute cooldown; `refresh: true` forces a mail-server pull)
 - `lqhd-outreach-hygiene`: **Outreach Data Hygiene** — Recipient filtering rules (never mail system mailboxes / internal employees / guessed addresses), pre-send SMTP RCPT probing without sending, post-send bounce scanning (`multipart/report` must be parsed by walking `text/plain` parts) and status sync (EmailRecord BOUNCED + contact verification), IMAP sent-mail verification by recipient+subject
 
@@ -75,7 +75,7 @@ Both types of reports are written to the **user's current working directory**; t
 
 | Report Type | Output Path | Naming Rule |
 |---------|---------|---------|
-| Individual customer background check report | `customers/<customer-id>-company-report.md` | Lowercase the customer's company name, replace spaces/special characters with hyphens, e.g. "US Company" → `us-company-report.md`; subsequent reports for the same customer overwrite and update it |
+| Individual customer background check report | `countries/<国家>/<公司名>公司报告.md` | `<国家>` = two-letter ISO code (e.g. `US`, `DE`; `MULTI` when undetermined); filename uses the company's real name, e.g. `countries/US/Altius Manufacturing公司报告.md`; subsequent reports for the same customer overwrite and update it. Legacy `customers/<id>-company-report.md` files are read-only history |
 | Country-aggregated intelligence report | `reports/<country-code>/` | Use the ISO two-letter uppercase country code (US/DE/FR/GB); filenames should preferably include the topic and date; multiple generations for the same country retain history |
 
 ### TeYi Spreadsheet Processing (Identify the Type First, Then Route Accordingly)
@@ -133,7 +133,7 @@ When actually sending development letters, the `lqhd-mail-delivery` skill perfor
 
 ## Email Template Generation
 
-Performed by the `lqhd-mail-template` skill: based on user prompts (purpose, target customers, product selling points, language, tone), generate reusable email templates and write them to `config/mail-template.md` in the **user's current working directory** (create the `config/` directory first if it does not exist). Templates use a four-paragraph structure with `{{placeholder}}` tokens and placeholder descriptions, for `lqhd-mail-agent` to apply or for the user to use manually; unlike personalized development letters for specific customers.
+Performed by the `lqhd-mail-template` skill: based on user prompts (purpose, target customers, product selling points, language, tone), generate reusable email templates and save them to the **workbench backend** (`AppData` key `email-templates`, via the `upsert-app-data` MCP tool, mode `merge` by template id). Templates use a four-paragraph structure with the three supported variables `%公司%` / `%联系人%` / `%国家%` (the workbench mail editor auto-substitutes them; `{{ }}` placeholders are forbidden); they are fetched back from the backend via `get-app-data` for `lqhd-mail-agent` to apply, or picked in the workbench mail editor's template picker.
 
 ## Directory Structure
 

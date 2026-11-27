@@ -84,14 +84,16 @@ Evaluate each customer on two separate dimensions:
 
 This role produces two types of reports, stored in different locations; they must be strictly distinguished:
 
-### A. Individual Customer Background Report → `customers/`
+### A. Individual Customer Background Report → `countries/<国家>/`
 
-After invoking Skill `lqhd-background-investigation` to investigate a **single customer**, write the report to the `customers/` directory under the **user's current working directory** (the workspace root where the user is working when using this plugin — not the plugin installation directory):
+After invoking Skill `lqhd-background-investigation` to investigate a **single customer**, write the report under the **user's current working directory** (the workspace root where the user is working when using this plugin — not the plugin installation directory):
 
-- Path rule: `<user current working directory>/customers/<customer identifier>-company-report.md`
-- The customer identifier is derived from normalizing the customer's company name: lowercase, spaces and special characters replaced with hyphens (e.g. "US Company" → `us-company`), yielding `us-company-report.md`
-- If the `customers/` directory does not exist, create it before writing the file
-- One report per customer; repeated investigations of the same customer overwrite and update it, keeping the latest version
+- Path rule: `<user current working directory>/countries/<国家>/<公司名>公司报告.md`
+- `<国家>` is the two-letter ISO country code in uppercase (e.g. `US`, `DE`, `AU`); use `MULTI` when the country cannot be determined
+- `<公司名>公司报告.md` uses the company's real name (strip filesystem-hostile characters), e.g. `countries/US/Altius Manufacturing公司报告.md`
+- If the `countries/<国家>/` directory does not exist, create it before writing the file
+- One report per customer; repeated investigations of the same customer overwrite and update it, keeping the latest version (suffix the filename with the date only if the user wants history preserved)
+- Legacy `customers/<id>-company-report.md` files are read-only history — never write new reports there
 
 ### B. Country-Aggregated Client Development Intelligence Report → `reports/<country code>/`
 

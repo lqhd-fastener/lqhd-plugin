@@ -185,9 +185,9 @@ Lead compiles → outputs to the user
 |---------|------------|
 | Generate / complete the company profile of "our company / us" | The Lead personally invokes Skill `lqhd-user-profile` (Phase 0), writing to profile/profile.md in the user's current working directory |
 | Only find clients / source leads (given a country) | lqhd-flush-agent |
-| Only background check / customer profile / match rate scoring and credibility tiering | lqhd-report-agent (a standalone client background-check report is saved to <user's current working directory>/customers/&lt;client identifier&gt;-company-report.md) |
+| Only background check / customer profile / match rate scoring and credibility tiering | lqhd-report-agent (a standalone client background-check report is saved to &lt;user's current working directory&gt;/countries/&lt;country code&gt;/&lt;company&gt;公司报告.md) |
 | Only write development emails / follow-up emails / translation | lqhd-mail-agent |
-| Generate / update reusable email templates | Invoke Skill `lqhd-mail-template`, writing to config/mail-template.md in the user's current working directory |
+| Generate / update reusable email templates | Invoke Skill `lqhd-mail-template`, saving templates to the workbench backend (AppData `email-templates`) via the upsert-app-data MCP tool |
 | Only inject results into the workbench | The Lead invokes MCP `lqhd-mcp-server` (Step 5) |
 | Produce a summary report / review follow-up status | lqhd-report-agent (report saved to <user's current working directory>/reports/&lt;country abbreviation&gt;/) |
 | Teyi xlsx **company list** (multiple companies + public corporate emails): background check / send development email to public email / insert into workbench | lqhd-teyi-company-list-agent (see Workflow C Type A: background check + notification + development email to public email + insert into MCP) |
@@ -229,7 +229,7 @@ The following specialized skills are integrated into this expert team and will b
 - **lqhd-background-investigation**: Customer background investigation — triggered when a potential client's credibility and operating status need to be investigated
 - **lqhd-user-profile**: User company profile building — generates the "user's own company profile" based on the user's prompt, company intro, product catalog and website, and writes it to profile/profile.md in the user's current working directory (creating the profile/ directory first if absent), serving as shared baseline information for client development (Phase 0). Overseas buyer profiles are produced by `lqhd-background-investigation`; the two are different
 - **lqhd-mail-delivery**: Email sending and bounce handling — when the user requests actual sending, reads configuration from config/mail.json in the working directory (auto-creating a sample file and prompting the user to fill in real information if missing), performs an SMTP probe before sending, sends, then checks for bounces after sending (SMTP response + IMAP message reading) and analyzes causes to provide solutions
-- **lqhd-mail-template**: Email template generation — generates reusable email templates based on the user's prompt and writes them to config/mail-template.md in the user's current working directory (creating the config/ directory first if absent), for later reuse or manual use
+- **lqhd-mail-template**: Email template generation — generates reusable email templates based on the user's prompt and saves them to the workbench backend (`AppData` key `email-templates`, variables %公司%/%联系人%/%国家%, no `{{ }}`); templates are read back from the backend via get-app-data
 - **lqhd-workbench-sync**: Workbench data sync & quality — triggered when results must be ingested into lqhd-mcp-server (idempotent batch upsert), state/coordinates enriched, a new country set up (config/boundaries/region names/ports), or a read-only data audit run
 - **lqhd-outreach-hygiene**: Outreach data hygiene — triggered when recipient filtering rules, pre-send SMTP RCPT probing (without sending), post-send bounce scanning and status sync (EmailRecord BOUNCED + contact verification), or IMAP sent-mail verification are needed
 

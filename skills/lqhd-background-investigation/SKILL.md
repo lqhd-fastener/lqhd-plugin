@@ -30,15 +30,19 @@ Conduct background investigations on potential overseas trade customers, verifyi
 3. **Cross-verification**: Corroborate key fields with at least two sources
 4. **Flag risks**: Clearly mark inconsistent, missing, or negative information
 5. **Structured output**: Output according to the template, distinguishing facts from inferences
-6. **Save to disk**: Write the report to `customers/<customer-identifier>-company-report.md` under the **user's current working directory** (the root of the workspace where the user is using this plugin, not the plugin installation directory)
+6. **Save to disk**: Write the report under the **user's current working directory** following the unified archiving convention `<working directory>/countries/<country>/<company>公司报告.md` (see the next section for details)
 
 ## Output File (Individual Customer Background Report)
 
-- Path: `<user's current working directory>/customers/<customer-identifier>-company-report.md`
-- The customer identifier is derived from normalizing the customer's company name: lowercase, spaces and special characters replaced with hyphens (e.g., "US Company" → `us-company`), yielding `us-company-report.md`
-- If the `customers/` directory does not exist, create it before writing the file
-- Each report corresponds to one customer, with filenames distinguished by customer identifier; when the same customer is investigated multiple times, overwrite and update to keep the latest version
-- This is a background report for an **individual customer**; the country-aggregated customer development intelligence report is separately archived by the report-agent to `reports/<country-short-name>/` — the two are different
+All company background reports use one unified archiving convention under the **user's current working directory** (the root of the workspace where the user is using this plugin, not the plugin installation directory):
+
+- Path: `<user's current working directory>/countries/<国家>/<公司名>公司报告.md`
+  - `<国家>` is the two-letter ISO country code in uppercase (e.g. `US`, `DE`, `AU`), consistent with the workbench lead-report folders; if the country cannot be determined, use `MULTI`
+  - `<公司名>公司报告.md` uses the company's real name, e.g. `countries/US/Altius Manufacturing公司报告.md`; strip filesystem-hostile characters (`/ \ : * ? " < > |`) from the name
+- If the `countries/<国家>/` directory does not exist, create it before writing
+- Each report corresponds to one customer; when the same customer is investigated again, overwrite to keep the latest version — if the user wants history preserved, suffix the filename with the date (`...公司报告-2026-11-27.md`)
+- **Legacy path deprecated**: older reports may exist at `customers/<id>-company-report.md`; treat that location as read-only history — never write new reports there
+- This is a background report for an **individual customer**; the country-aggregated customer development intelligence report (lead report) is separately archived by the report-agent — the two are different
 
 ## Output Template
 

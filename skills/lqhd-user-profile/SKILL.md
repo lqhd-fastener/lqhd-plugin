@@ -47,6 +47,7 @@ Collect based on availability; use whatever the user provides, and mark missing 
 4. **Distill selling points**: Summarize core value propositions and differentiating advantages into keywords usable in outreach emails
 5. **Structured output**: Generate the profile according to the template below
 6. **Save to disk**: Write the generated profile to `profile/profile.md` under the **user's current working directory** (the root of the workspace where the user is using this plugin, not the plugin installation directory); if the `profile/` directory does not exist, create it before writing the file
+7. **Sync to the workbench backend (mandatory)**: After the local file is written, push the same content to the workbench via the MCP `upsert-app-data` tool — `key: "user-profile"`, `value: { "text": "<the full profile Markdown>" }`, `mode: "replace"`. Then read it back with `get-app-data` (`key: "user-profile"`, `raw: true`) to confirm the write. If the MCP service is unreachable, state so honestly and tell the user the profile exists only locally for now
 
 ## Output Template
 
@@ -98,6 +99,7 @@ Collect based on availability; use whatever the user provides, and mark missing 
 - Write path = `<user's current working directory>/profile/profile.md`, where `profile/` in the path is relative to the current working directory
 - If there is no `profile/` in the current working directory, first create the directory with mkdir, then write `profile.md`
 - On repeated generation, overwrite and update the file to keep the content as the latest profile
+- **The workbench backend (`AppData` key `user-profile`) must be kept in sync** — local file and backend always hold the same latest content. Downstream consumers (mail-agent, follow-up-agent, team analysis) should read the profile **backend-first** via `get-app-data` (`key: "user-profile"`), falling back to the local `profile/profile.md` only when the MCP service is unreachable
 
 ## Notes
 

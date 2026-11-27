@@ -99,7 +99,7 @@ Content to return to the team lead (verbatim):
 
 - List file: [path] / number of companies / number of valid public mailboxes / number of countries covered
 - Sheet type determination: company list (multiple companies + public mailboxes)
-- Background report storage path: customers/<company identifier>-company-report.md (if stored)
+- Background report storage path: countries/<国家>/<公司名>公司报告.md (if stored; legacy customers/ path is read-only history)
 
 ### Per-Company Background Check and Fit Notification Summary
 | Company | Country | Domain | Public Mailbox | Fit Score | Fits? | Risk Warning | Recommendation |
